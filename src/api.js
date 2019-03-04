@@ -55,29 +55,29 @@ function createFunc(url, object, key) {
 
 // =====++++============ PATCH FUNCTION ===============================
 
-function patchDocument(document) {
+function updateDocument(document) {
   return patchFunc(`${documentsURL}/${document.id}`, document, 'document')
 }
 
-function patchWorkspace(workspace) {
+function updateWorkspace(workspace) {
   return patchFunc(`${workspacesURL}/${workspace.id}`, workspace, 'workspace')
 }
 
-function patchTag(tag) {
+function updateTag(tag) {
   return patchFunc(`${tagsURL}/${tag.id}`, tag, 'tag')
 }
 
-function patchComment(comment) {
+function updateComment(comment) {
   return patchFunc(`${commentsURL}/${comment.id}`, comment, 'comment')
 }
 
-function patchUser(user) {
+function updateUser(user) {
 return patchFunc(`${usersURL}/${user.id}`, user, 'user')
 }
 
 function patchFunc(url, object, key) {
   const options = {
-    method: "patch",
+    method: "PATCH",
     headers: {
       'Accept': 'application/json', 
       'Content-Type': 'application/json'
@@ -92,34 +92,29 @@ function patchFunc(url, object, key) {
 // =====++++============ POST FUNCTION ===============================
 
 function deleteDocument(document) {
-  return createFunc(documentsURL, document, 'document')
+  return deleteFunc(`${documentsURL}/${document.id}`, document, 'document')
 }
 
 function deleteWorkspace(workspace) {
-  return deleteFunc(workspacesURL, workspace, 'workspace')
+  return deleteFunc('${workspacesURL}/${workspace.id}', workspace, 'workspace')
 }
 
 function deleteTag(tag) {
-  return deleteFunc(tagsURL, tag, 'tag')
+  return deleteFunc(`${tagsURL}/${tag.id}`, tag, 'tag')
 }
 
 function deleteComment(comment) {
-  return deleteFunc(commentsURL, comment, 'comment')
+  return deleteFunc(`${commentsURL}/${comment.id}`, comment, 'comment')
 }
 
 function deleteUser(user) {
-return deleteFunc(usersURL, user, 'user')
+return deleteFunc(`${usersURL}/${user.id}`, user, 'user')
 }
 
 function deleteFunc(url, object, key) {
   const options = {
-    method: "DELETE",
-    headers: {
-      'Accept': 'application/json', 
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({[key]: object})
-    }
+    method: "DELETE"}
+ 
   return fetch(url, options)
     .then(resp => resp.json)
     .then(resp => console.log(resp))
