@@ -4,86 +4,81 @@ const usersURL = `${baseURL}/users`
 const workspacesURL = `${baseURL}/workspaces`
 const commentsURL = `${baseURL}/comments`
 const tagsURL = `${baseURL}/tags`
-
-
 // =====++++============ GET FUNCTION ===============================
 
-function getDocuments() {
+function getDocuments () {
   return fetch(documentsURL)
     .then(resp => resp.json)
     .then(resp => console.log(resp))
 }
 
-
-
 // =====++++============ POST FUNCTION ===============================
 
-function createDocument(document) {
+function createDocument (document) {
   return createFunc(documentsURL, document, 'document')
 }
 
-function createWorkspace(workspace) {
+function createWorkspace (workspace) {
   return createFunc(workspacesURL, workspace, 'workspace')
 }
 
-function createTag(tag) {
+function createTag (tag) {
   return createFunc(tagsURL, tag, 'tag')
 }
 
-function createComment(comment) {
+function createComment (comment) {
   return createFunc(commentsURL, comment, 'comment')
 }
 
-function createUser(user) {
-return createFunc(usersURL, user, 'user')
+function createUser (user) {
+  return createFunc(usersURL, user, 'user')
 }
 
-function createFunc(url, object, key) {
+function createFunc (url, object, key) {
   const options = {
-    method: "POST",
+    method: 'POST',
     headers: {
-      'Accept': 'application/json', 
+      'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({[key]: object})
-    }
+    body: JSON.stringify({ [key]: object })
+  }
   return fetch(url, options)
     .then(resp => resp.json)
     .then(resp => console.log(resp))
 }
 
-
 // =====++++============ PATCH FUNCTION ===============================
 
-function updateDocument(document) {
+function updateDocument (document) {
   return patchFunc(`${documentsURL}/${document.id}`, document, 'document')
 }
 
-function updateWorkspace(workspace) {
+function updateWorkspace (workspace) {
   return patchFunc(`${workspacesURL}/${workspace.id}`, workspace, 'workspace')
 }
 
-function updateTag(tag) {
+function updateTag (tag) {
   return patchFunc(`${tagsURL}/${tag.id}`, tag, 'tag')
 }
 
-function updateComment(comment) {
+function updateComment (comment) {
   return patchFunc(`${commentsURL}/${comment.id}`, comment, 'comment')
 }
 
-function updateUser(user) {
-return patchFunc(`${usersURL}/${user.id}`, user, 'user')
+function updateUser (user) {
+  return patchFunc(`${usersURL}/${user.id}`, user, 'user')
 }
 
-function patchFunc(url, object, key) {
+function patchFunc (url, object, key) {
   const options = {
-    method: "PATCH",
+    method: 'PATCH',
     headers: {
-      'Accept': 'application/json', 
+      'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({[key]: object})
-    }
+    body: JSON.stringify({ [key]: object })
+  }
   return fetch(url, options)
     .then(resp => resp.json)
     .then(resp => console.log(resp))
@@ -91,30 +86,30 @@ function patchFunc(url, object, key) {
 
 // =====++++============ POST FUNCTION ===============================
 
-function deleteDocument(document) {
+function deleteDocument (document) {
   return deleteFunc(`${documentsURL}/${document.id}`, document, 'document')
 }
 
-function deleteWorkspace(workspace) {
+function deleteWorkspace (workspace) {
   return deleteFunc('${workspacesURL}/${workspace.id}', workspace, 'workspace')
 }
 
-function deleteTag(tag) {
+function deleteTag (tag) {
   return deleteFunc(`${tagsURL}/${tag.id}`, tag, 'tag')
 }
 
-function deleteComment(comment) {
+function deleteComment (comment) {
   return deleteFunc(`${commentsURL}/${comment.id}`, comment, 'comment')
 }
 
-function deleteUser(user) {
-return deleteFunc(`${usersURL}/${user.id}`, user, 'user')
+function deleteUser (user) {
+  return deleteFunc(`${usersURL}/${user.id}`, user, 'user')
 }
 
-function deleteFunc(url, object, key) {
+function deleteFunc (url, object, key) {
   const options = {
-    method: "DELETE"}
- 
+    method: 'DELETE' }
+
   return fetch(url, options)
     .then(resp => resp.json)
     .then(resp => console.log(resp))
