@@ -91,7 +91,7 @@ function deleteDocument (document) {
 }
 
 function deleteWorkspace (workspace) {
-  return deleteFunc('${workspacesURL}/${workspace.id}', workspace, 'workspace')
+  return deleteFunc(`${workspacesURL}/${workspace.id}`, workspace, 'workspace')
 }
 
 function deleteTag (tag) {
