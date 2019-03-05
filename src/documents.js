@@ -14,7 +14,6 @@ function showDoc (doc) {
   <button>Edit</button>
   <button>Delete</button>`
   workspaceEl.append(docCard)
-  //console.log(doc.id)
   setEditEvent(docCard, doc)
 }
 
@@ -35,7 +34,44 @@ function showAllDocs (currentWorkspace) {
 // form with fields upload, title, status, duedate
 // hidden field for workspace
 
+newDocButton = document.createElement('button')
+newDocButton.innerText = 'Add document'
 
+function setCreateEvent () {
+  newDocButton.addEventListener('click', () => {
+    createNewForm()
+  })
+  workspaceEl.append(newDocButton)
+  
+}
+setCreateEvent()
+
+function createNewForm () {
+  const FormEl = document.createElement('form')
+  FormEl.innerHTML =
+  `
+  <input type="hidden" name="workspace" value="${currentWorkspace.id}">
+  <input type="hidden" name="docText" value=""> 
+  Document name:
+  <input type="text" name="name"><br>
+  Paid:
+  <input type="checkbox" name="paid"><br>
+  Deadline:
+  <input type="date" name="deadline"><br>
+  <input type="submit" value="Submit">`
+  FormEl.addEventListener('submit', (event) => {
+    event.preventDefault()
+    createDocument({
+      name: event.target.name.value,
+      paid: event.target.paid.checked,
+      deadline: event.target.deadline.value,
+      workspace_id: event.target.workspace.value,
+      doctext: event.target.docText.value,
+
+    })
+  })
+  workspaceEl.append(FormEl)
+}
 // ===================== Editing =======================
 
 function setEditEvent (docCard, doc) {
@@ -56,14 +92,14 @@ function createEditForm (docCard, doc) {
   Document name:
   <input type="text" name="name"><br>
   Paid:
-  <input type="checkbox" name="paid" ${doc.paid === true ? "checked" : "unchecked"}><br>
+  <input type="checkbox" name="paid" ${doc.paid === true ? 'checked' : 'unchecked'}><br>
   Deadline:
   <input type="date" name="deadline"><br>
   <input type="submit" value="Submit">`
   editFormEl.addEventListener('submit', (event) => {
     event.preventDefault()
-    updateDocument ({
-      name: event.target.name.value, 
+    updateDocument({
+      name: event.target.name.value,
       paid: event.target.paid.checked,
       deadline: event.target.deadline.value,
       workspace_id: event.target.workspace.value,
