@@ -1,11 +1,11 @@
 
 
-
 function getTestUser () {
-  return getUsers()
+  let currentUser
+  getUsers()
     .then(resp => { 
-      console.log(resp)
-      setWorkspace(resp[0]) 
+      currentUser = resp[0]
+      setWorkspace(currentUser) 
     })
 }
 

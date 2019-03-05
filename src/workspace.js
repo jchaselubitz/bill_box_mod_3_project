@@ -4,12 +4,10 @@
 
 let currentWorkspace
 function setWorkspace (currentUser) {
-  console.log(currentUser)
+  //### SET BASED ON LOGGED-IN USER
   currentWorkspace = currentUser.workspaces[0]
-  console.log(currentWorkspace)
   showAllDocs(currentWorkspace)
 
 }
-
 //function for creating workspace 
 const workspaceEl = document.querySelector('#workspace')

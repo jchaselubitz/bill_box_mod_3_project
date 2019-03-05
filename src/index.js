@@ -2,6 +2,5 @@
 
 function init () {
   getTestUser()
-  
 }
 init()
