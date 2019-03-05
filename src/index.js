@@ -1,2 +1,7 @@
 
 
+function init () {
+  getTestUser()
+  
+}
+init()

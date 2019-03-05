@@ -4,12 +4,31 @@ const usersURL = `${baseURL}/users`
 const workspacesURL = `${baseURL}/workspaces`
 const commentsURL = `${baseURL}/comments`
 const tagsURL = `${baseURL}/tags`
-// =====++++============ GET FUNCTION ===============================
+// =====++++============ GET FUNCTION =======================
 
 function getDocuments () {
-  return fetch(documentsURL)
-    .then(resp => resp.json)
-    .then(resp => console.log(resp))
+  return getFunc (documentsURL) 
+}
+
+function getWorkspaces () {
+  return getFunc (workspacesURL) 
+}
+
+function getTags () {
+  return getFunc (workspacesURL) 
+}
+
+function getComments () {
+  return getFunc (commentsURL) 
+}
+
+function getUsers () {
+  return getFunc (usersURL) 
+}
+
+function getFunc (url) {
+   return fetch(url)
+      .then(resp => resp.json())
 }
 
 // =====++++============ POST FUNCTION ===============================
