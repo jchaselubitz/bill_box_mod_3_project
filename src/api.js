@@ -1,5 +1,6 @@
 const baseURL = `http://localhost:3000/api/v001`
 const documentsURL = `${baseURL}/documents`
+const uploadFileURL = `${baseURL}/upload_file`
 const usersURL = `${baseURL}/users`
 const workspacesURL = `${baseURL}/workspaces`
 const commentsURL = `${baseURL}/comments`
@@ -7,28 +8,28 @@ const tagsURL = `${baseURL}/tags`
 // =====++++============ GET FUNCTION =======================
 
 function getDocuments () {
-  return getFunc (documentsURL) 
+  return getFunc(documentsURL)
 }
 
 function getWorkspaces () {
-  return getFunc (workspacesURL) 
+  return getFunc(workspacesURL)
 }
 
 function getTags () {
-  return getFunc (workspacesURL) 
+  return getFunc(tagsURL)
 }
 
 function getComments () {
-  return getFunc (commentsURL) 
+  return getFunc(commentsURL)
 }
 
 function getUsers () {
-  return getFunc (usersURL) 
+  return getFunc(usersURL)
 }
 
 function getFunc (url) {
-   return fetch(url)
-      .then(resp => resp.json())
+  return fetch(url)
+    .then(resp => resp.json())
 }
 
 // =====++++============ POST FUNCTION ===============================
@@ -70,6 +71,7 @@ function createFunc (url, object, key) {
 // =====++++============ PATCH FUNCTION ===============================
 
 function updateDocument (document) {
+  console.log("update Post", document)
   return patchFunc(`${documentsURL}/${document.id}`, document, 'document')
 }
 

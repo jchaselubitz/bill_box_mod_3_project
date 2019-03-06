@@ -1,6 +1,8 @@
+// ===================== authenticate =======================
+
 
 
 function init () {
-  getTestUser()
+  authenticate()
 }
 init()

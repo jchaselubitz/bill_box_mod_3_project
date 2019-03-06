@@ -4,7 +4,7 @@ function showAllDocs (currentWorkspace) {
   getDocuments()
     .then(resp => {
       for (const doc of resp) {
-        if (doc.workspace_id[0] = currentWorkspace) {
+        if (doc.workspace_id === currentWorkspace.id) {
           showDoc(doc)
         }
       }
@@ -12,15 +12,18 @@ function showAllDocs (currentWorkspace) {
 }
 
 function showDoc (doc) {
+  console.log(doc)
   const docCard = document.createElement('div')
   docCard.innerHTML =
   `<h2 class="title">${doc.name}</h2>
   <p class="paid">${doc.paid}</p>
   <p class="deadline">Deadline: ${doc.deadline}</p>
+  <p class="file">${doc.image}</p>
   <button>Delete</button>`
   setEditTitle(docCard, doc)
   setEditStatus(docCard, doc)
   setEditDeadline(docCard, doc)
+  setEditFile(docCard, doc)
   workspaceEl.append(docCard)
 }
 
@@ -35,6 +38,10 @@ function setEditStatus (docCard, doc) {
 function setEditDeadline (docCard, doc) {
   return setEditEvent(docCard, doc, 'deadline')
 }
+function setEditFile (docCard, doc) {
+  return setEditEvent(docCard, doc, 'file')
+}
+
 
 function setEditEvent (docCard, doc, classname) {
   docCard.addEventListener('click', (event) => {
@@ -59,6 +66,13 @@ function createEditField (docCard, doc, classname) {
     formEl.innerHTML = `Deadline: <input type="date" name="deadline">
     <input type="submit" value="Submit">`
     deadlineSubmission (formEl, doc)
+  } else if (classname === "file") {
+    formEl.innerHTML = `File: <form method="POST" action="http://localhost:3000/upload_file" enctype="multipart/form-data">
+    <input type="file" name="file" />
+    <button>SUBMIT</button>
+  </form>
+  `
+    fileSubmission (formEl, doc)
   }
   fieldLocation.append(formEl)
 }
@@ -75,6 +89,11 @@ function deadlineSubmission (formEl, doc) {
   return submitEdit(formEl, doc, "deadline")
 }
 
+function fileSubmission (formEl, doc) {
+  return submitEdit(formEl, doc, "file")
+}
+
+
 function submitEdit(formEl, doc, sender) {
   formEl.addEventListener('submit', (event) => {
     event.preventDefault()
@@ -82,6 +101,7 @@ function submitEdit(formEl, doc, sender) {
       name: sender === "title" ? event.target.title.value : doc.name,
       paid: sender === "paid" ? event.target.paid.checked : doc.paid,
       deadline: sender === "deadline" ? event.target.deadline.value : doc.deadline,
+      //image: sender === "file" ? event.target.file.files[0] : doc.image,
       workspace_id: doc.workspace_id,
       doctext: doc.doctext,
       id: doc.id
@@ -89,20 +109,25 @@ function submitEdit(formEl, doc, sender) {
   })
 }
 
+// function submitEditFile(formEl, doc, sender) {
+
+// }
+
 // ===================== Creation =======================
 
-newDocButton = document.createElement('button')
-newDocButton.innerText = 'Add document'
+
 
 function setCreateEvent () {
+  const newDocButton = document.createElement('button')
+  newDocButton.innerText = 'Add document'
   newDocButton.addEventListener('click', () => {
-    createNewForm()
+    createNewDocForm()
   })
   workspaceEl.append(newDocButton)
 }
-setCreateEvent()
 
-function createNewForm () {
+
+function createNewDocForm () {
   const FormEl = document.createElement('form')
   FormEl.innerHTML = `
   <input type="hidden" name="workspace" value="${currentWorkspace.id}">
