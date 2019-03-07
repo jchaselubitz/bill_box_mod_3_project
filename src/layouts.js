@@ -1,6 +1,6 @@
 //top navigation
 const navBar = document.createElement('ul')
-navBar.className = 'navbar nav bg-primary'
+navBar.className = 'navbar nav'
 navBar.id = 'navBar'
 
 //side navigation
@@ -16,9 +16,11 @@ loginPanel.className = 'loginPanel container bg-white border border-secondary'
 
 //workspace
 const workspaceEl = document.createElement('div')
-workspaceEl.className = "col bg-light"
+workspaceEl.className = "workspace col bg-light"
 
 //documents
 const cardDeck = document.createElement('div')
 cardDeck.className = 'card-deck'
 workspaceEl.append(cardDeck)
+
+const main = document.getElementById('main')

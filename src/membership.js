@@ -11,6 +11,7 @@ function authenticate () {
   } else {
     setNav("in")
     chooseWorkspace(currentUser)
+    //send to workspace
   }
 }
 // ===================== Login =======================
@@ -25,7 +26,6 @@ function showLogin (users) {
   <input type="submit" value="Log In">`
   logForm.id = 'logForm'
   loginPanel.append(logForm)
-  document.body.append(loginContainer)
   logForm.addEventListener('submit', (event) => {
     event.preventDefault()
     let currentUserAttempt = event.target.username.value
@@ -71,6 +71,7 @@ function logout () {
 
 // ===================== Create User =======================
 let newUserButton = document.createElement('button')
+newUserButton.className = 'btn btn-primary center'
 newUserButton.innerText = 'Create Account'
 
 function setNewUserFormEvent () {

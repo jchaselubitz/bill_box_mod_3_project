@@ -25,13 +25,10 @@ function chooseWorkspace (currentUser) {
 
 function setWorkspace (workspace) {
   let currentWorkspace = workspace
-  createWorkspaceThing()
   showAllDocs(currentWorkspace)
 }
 
-function createWorkspaceThing () {
-  setLogoutEvent ()
-}
+
 
 // ===================== Create Workspace =======================
 
@@ -46,18 +43,14 @@ function setNewWorkspaceFormEvent () {
 
 function createNewWorkspaceForm () {
   const newWorkspaceForm = document.createElement('form')
-  newWorkspaceForm.className = 'newWorkspaceForm'
+  newWorkspaceForm.className = 'form-group'
   newWorkspaceForm.innerHTML = `
   Name your workspace: <input type="text" name="name"><br>
   <input type="hidden" name="user" value="${currentUser.id}"><br>
   <input type="submit" value="Submit">`
-  workspaceEl.append(newWorkspaceForm)
+  workspaceEl.prepend(newWorkspaceForm)
   newWorkspaceForm.addEventListener('submit', (event) => {
     event.preventDefault()
-    // console.log({
-    //   name: event.target.name.value,
-    //   user: event.target.user.value
-    // })
     createWorkspace({
       name: event.target.name.value,
       user: event.target.user.value

@@ -1,5 +1,7 @@
 
-const logoutButton = document.createElement('button'); logoutButton.innerText = 'Logout'
+const logoutButton = document.createElement('button')
+logoutButton.className = 'btn btn-light'
+logoutButton.innerText = 'Logout'
 
 function setNav (status) {
   if (status === 'in') {
@@ -8,6 +10,7 @@ function setNav (status) {
     main.append(sideNav)
     main.append(workspaceEl)
     navBar.append(logoutButton)
+    setLogoutEvent ()
     setLogoutEvent()
   } else {
     main.append(loginPanel)

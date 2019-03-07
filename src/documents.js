@@ -1,9 +1,7 @@
 
 // ===================== Presentation =======================
 function showAllDocs (currentWorkspace) {
-  
-  
-  
+
   getDocuments()
     .then(resp => {
       for (const doc of resp) {
@@ -20,9 +18,10 @@ function showDoc (doc) {
   const docCard = document.createElement('div')
   docCard.className = "card bg-white border border-secondary "
   docCard.innerHTML =
-  `<img src="${doc.image}" class="card-img-top" alt="img not avalible">
+  `<img src="https://timedotcom.files.wordpress.com/2017/03/medical-bills.jpg?quality=85" class="card-img-top" alt="img not avalible">
     <div class="card-body">
       <h5 class="card-title">${doc.name}</h5>
+      <p class="card-text file">${doc.link}</p>
       <p class="card-text paid">${doc.paid}</p>
       <p class="card-text deadline">${doc.deadline}</p>
       <button class="btn btn-primary">Delete</button>
@@ -31,6 +30,7 @@ function showDoc (doc) {
   setEditStatus(docCard, doc)
   setEditDeadline(docCard, doc)
   setEditFile(docCard, doc)
+  setDeleteFile(docCard, doc)
   cardDeck.append(docCard)
 }
 
@@ -46,9 +46,8 @@ function setEditDeadline (docCard, doc) {
   return setEditEvent(docCard, doc, 'card-text deadline')
 }
 function setEditFile (docCard, doc) {
-  return setEditEvent(docCard, doc, 'file')
+  return setEditEvent(docCard, doc, 'card-text file')
 }
-
 
 function setEditEvent (docCard, doc, classname) {
   docCard.addEventListener('click', (event) => {
@@ -59,27 +58,25 @@ function setEditEvent (docCard, doc, classname) {
 }
 
 function createEditField (docCard, doc, classname) {
-  let fieldLocation = docCard.querySelector(`.${classname}`)
+  console.log(classname)
+  let fieldLocation = docCard.querySelector(`.${classname.split(' ').join('.')}`)
   const formEl = document.createElement('form')
-  if (classname === "title") {
+  if (classname === "card-title") {
     formEl.innerHTML = `Title: <input type="text" name="title">
     <input type="submit" value="Submit">`
     titleSubmission (formEl, doc)
-  } else if (classname === "paid") {
+  } else if (classname === "card-text paid") {
     formEl.innerHTML = `Paid: <input type="checkbox" name="paid" ${doc.paid === true ? 'checked' : 'unchecked'}>
     <input type="submit" value="Submit">`
     paidSubmission (formEl, doc)
-  } else if (classname === "deadline") {
+  } else if (classname === "card-text deadline") {
     formEl.innerHTML = `Deadline: <input type="date" name="deadline">
     <input type="submit" value="Submit">`
     deadlineSubmission (formEl, doc)
-  } else if (classname === "file") {
-    formEl.innerHTML = `File: <form method="POST" action="http://localhost:3000/upload_file" enctype="multipart/form-data">
-    <input type="file" name="file" />
-    <button>SUBMIT</button>
-  </form>
-  `
-    fileSubmission (formEl, doc)
+  } else if (classname === "card-text file") {
+    formEl.innerHTML = `Link to document: <input type="text" name="file">
+    <input type="submit" value="Submit">`
+    fileSubmission(formEl, doc)
   }
   fieldLocation.append(formEl)
 }
@@ -108,7 +105,7 @@ function submitEdit(formEl, doc, sender) {
       name: sender === "title" ? event.target.title.value : doc.name,
       paid: sender === "paid" ? event.target.paid.checked : doc.paid,
       deadline: sender === "deadline" ? event.target.deadline.value : doc.deadline,
-      //image: sender === "file" ? event.target.file.files[0] : doc.image,
+      file: sender === "file" ? event.target.file.value : doc.link,
       workspace_id: doc.workspace_id,
       doctext: doc.doctext,
       id: doc.id
@@ -121,8 +118,6 @@ function submitEdit(formEl, doc, sender) {
 // }
 
 // ===================== Creation =======================
-
-
 
 function setCreateEvent () {
   const newDocButton = document.createElement('button')
@@ -140,6 +135,7 @@ function createNewDocForm () {
   <input type="hidden" name="workspace" value="${currentWorkspace.id}">
   <input type="hidden" name="docText" value=""> 
   Document name: <input type="text" name="name"><br>
+  Document link: <input type="text" name="file"><br>
   Paid: <input type="checkbox" name="paid"><br>
   Deadline: <input type="date" name="deadline"><br>
   <input type="submit" value="Submit">`
@@ -147,6 +143,7 @@ function createNewDocForm () {
     event.preventDefault()
     createDocument({
       name: event.target.name.value,
+      file: event.target.file.value,
       paid: event.target.paid.checked,
       deadline: event.target.deadline.value,
       workspace_id: event.target.workspace.value,
@@ -158,3 +155,19 @@ function createNewDocForm () {
 }
 
 // ===================== Deleting =======================
+
+function setDeleteFile(docCard, doc) {
+  docCard.addEventListener('click', (event) => {
+    if (event.target.innerText === 'Delete') {
+      deleteDocument(doc)
+    }
+  })
+}
+
+
+
+
+// File: <form method="POST" action="http://localhost:3000/upload_file" enctype="multipart/form-data">
+//     <input type="file" name="file" />
+//     <button>SUBMIT</button>
+//   </form>
