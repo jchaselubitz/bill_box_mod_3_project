@@ -1,6 +1,9 @@
 
 // ===================== Presentation =======================
 function showAllDocs (currentWorkspace) {
+  
+  
+  
   getDocuments()
     .then(resp => {
       for (const doc of resp) {
@@ -13,30 +16,34 @@ function showAllDocs (currentWorkspace) {
 
 function showDoc (doc) {
   console.log(doc)
+  //const docCard = document.createElement('div')
   const docCard = document.createElement('div')
+  docCard.className = "card bg-white border border-secondary "
   docCard.innerHTML =
-  `<h2 class="title">${doc.name}</h2>
-  <p class="paid">${doc.paid}</p>
-  <p class="deadline">Deadline: ${doc.deadline}</p>
-  <p class="file">${doc.image}</p>
-  <button>Delete</button>`
+  `<img src="${doc.image}" class="card-img-top" alt="img not avalible">
+    <div class="card-body">
+      <h5 class="card-title">${doc.name}</h5>
+      <p class="card-text paid">${doc.paid}</p>
+      <p class="card-text deadline">${doc.deadline}</p>
+      <button class="btn btn-primary">Delete</button>
+    </div>`
   setEditTitle(docCard, doc)
   setEditStatus(docCard, doc)
   setEditDeadline(docCard, doc)
   setEditFile(docCard, doc)
-  workspaceEl.append(docCard)
+  cardDeck.append(docCard)
 }
 
 // ===================== Editing =======================
 
 function setEditTitle (docCard, doc) {
-  return setEditEvent(docCard, doc, 'title')
+  return setEditEvent(docCard, doc, 'card-title')
 }
 function setEditStatus (docCard, doc) {
-  return setEditEvent(docCard, doc, 'paid')
+  return setEditEvent(docCard, doc, 'card-text paid')
 }
 function setEditDeadline (docCard, doc) {
-  return setEditEvent(docCard, doc, 'deadline')
+  return setEditEvent(docCard, doc, 'card-text deadline')
 }
 function setEditFile (docCard, doc) {
   return setEditEvent(docCard, doc, 'file')

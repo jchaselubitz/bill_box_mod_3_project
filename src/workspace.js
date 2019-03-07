@@ -1,10 +1,11 @@
 
-const workspaceEl = document.querySelector('#workspace')
+
 let newWorkspaceButton = document.createElement('button')
 
 function chooseWorkspace (currentUser) {
   let workspacesArray = currentUser.workspaces
   let select = document.createElement('select')
+  navBar.append(select)
   select.id = 'workspaceChooser'
   let opt = document.createElement('option')
   opt.textContent = "Select Workspace"
@@ -16,10 +17,10 @@ function chooseWorkspace (currentUser) {
     select.append(opt)
   }
   setNewWorkspaceFormEvent()
-  workspaceEl.append(newWorkspaceButton)
+  navBar.append(newWorkspaceButton)
 
   select.addEventListener('change', () => setWorkspace(workspacesArray.find(workspace => workspace.id.toString() === select.value)))
-  navBar.append(select)
+  
 }
 
 function setWorkspace (workspace) {
@@ -36,7 +37,8 @@ function createWorkspaceThing () {
 
 
 function setNewWorkspaceFormEvent () {
-  newWorkspaceButton.innerText = 'Create Workspace'
+  newWorkspaceButton.innerText = '+'
+  newWorkspaceButton.id = 'newWorkspaceButton'
   newWorkspaceButton.addEventListener('click', () => {
     createNewWorkspaceForm()
   })
@@ -49,7 +51,7 @@ function createNewWorkspaceForm () {
   Name your workspace: <input type="text" name="name"><br>
   <input type="hidden" name="user" value="${currentUser.id}"><br>
   <input type="submit" value="Submit">`
-  document.body.append(newWorkspaceForm)
+  workspaceEl.append(newWorkspaceForm)
   newWorkspaceForm.addEventListener('submit', (event) => {
     event.preventDefault()
     // console.log({

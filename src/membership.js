@@ -24,7 +24,8 @@ function showLogin (users) {
   logForm.innerHTML = `Username: <input type="text" name="username">
   <input type="submit" value="Log In">`
   logForm.id = 'logForm'
-  document.body.append(logForm)
+  loginPanel.append(logForm)
+  document.body.append(loginContainer)
   logForm.addEventListener('submit', (event) => {
     event.preventDefault()
     let currentUserAttempt = event.target.username.value
@@ -77,7 +78,7 @@ function setNewUserFormEvent () {
     newUserButton.innerText = 'Log In'
     createNewUserForm()
   })
-  document.body.append(newUserButton)
+  loginPanel.append(newUserButton)
 }
 
 function createNewUserForm () {
@@ -100,5 +101,5 @@ function createNewUserForm () {
     })
     authenticate ()
   })
-  document.body.append(newUserForm)
+  loginPanel.append(newUserForm)
 }
