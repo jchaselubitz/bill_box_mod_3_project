@@ -1,7 +1,7 @@
 
 // ===================== Presentation =======================
-function showAllDocs (currentWorkspace) {
 
+function showAllDocs (currentWorkspace) {
   getDocuments()
     .then(resp => {
       for (const doc of resp) {
@@ -14,7 +14,6 @@ function showAllDocs (currentWorkspace) {
 
 function showDoc (doc) {
   console.log(doc)
-  //const docCard = document.createElement('div')
   const docCard = document.createElement('div')
   docCard.className = "card bg-white border border-secondary "
   docCard.innerHTML =
@@ -120,13 +119,16 @@ function submitEdit(formEl, doc, sender) {
 // ===================== Creation =======================
 
 function setCreateEvent () {
+  console.log(currentUser)
   const newDocButton = document.createElement('button')
+  newDocButton.className = 'btn btn-primary'
   newDocButton.innerText = 'Add document'
   newDocButton.addEventListener('click', () => {
     createNewDocForm()
   })
-  workspaceEl.append(newDocButton)
+  workspaceEl.prepend(newDocButton)
 }
+setCreateEvent ()
 
 
 function createNewDocForm () {
@@ -141,17 +143,18 @@ function createNewDocForm () {
   <input type="submit" value="Submit">`
   FormEl.addEventListener('submit', (event) => {
     event.preventDefault()
-    createDocument({
+    let newDoc = {
       name: event.target.name.value,
       file: event.target.file.value,
       paid: event.target.paid.checked,
       deadline: event.target.deadline.value,
       workspace_id: event.target.workspace.value,
       doctext: event.target.docText.value
-
-    })
+    }
+    createDocument(newDoc)
+    .then(resp => showDoc(resp))
   })
-  workspaceEl.append(FormEl)
+  workspaceEl.prepend(FormEl)
 }
 
 // ===================== Deleting =======================
@@ -160,6 +163,7 @@ function setDeleteFile(docCard, doc) {
   docCard.addEventListener('click', (event) => {
     if (event.target.innerText === 'Delete') {
       deleteDocument(doc)
+      .then(() => docCard.remove())
     }
   })
 }

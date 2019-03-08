@@ -10,8 +10,12 @@ function authenticate () {
       .then(users => showLogin(users))
   } else {
     setNav("in")
-    chooseWorkspace(currentUser)
-    //send to workspace
+    if (currentWorkspace) {
+      showAllDocs(currentWorkspace)
+      chooseWorkspace (currentUser)
+    } else {
+      chooseWorkspace(currentUser)
+    }
   }
 }
 // ===================== Login =======================
@@ -22,10 +26,12 @@ function authenticate () {
 
 function showLogin (users) {
   const logForm = document.createElement('form')
-  logForm.innerHTML = `Username: <input type="text" name="username">
-  <input type="submit" value="Log In">`
   logForm.id = 'logForm'
-  loginPanel.append(logForm)
+  logForm.className = 'logForm'
+  logForm.innerHTML = `Username:<input type="text" name="username">
+  <input type="submit" value="Log In" class="btn btn-primary">`
+
+  loginPanelForm.append(logForm)
   logForm.addEventListener('submit', (event) => {
     event.preventDefault()
     let currentUserAttempt = event.target.username.value
@@ -71,36 +77,45 @@ function logout () {
 
 // ===================== Create User =======================
 let newUserButton = document.createElement('button')
-newUserButton.className = 'btn btn-primary center'
+newUserButton.className = 'btn btn-link center'
 newUserButton.innerText = 'Create Account'
 
 function setNewUserFormEvent () {
   newUserButton.addEventListener('click', () => {
-    newUserButton.innerText = 'Log In'
+    newUserButton.remove()
     createNewUserForm()
   })
-  loginPanel.append(newUserButton)
+  loginPanelButtonContainer.append(newUserButton)
 }
 
 function createNewUserForm () {
   hideLogin()
   const newUserForm = document.createElement('form')
-  newUserForm.className = 'newUserForm'
-  newUserForm.innerHTML = `
+  const newUserFormDiv = document.createElement('div')
+  newUserFormDiv.className = "form"
+  newUserFormDiv.innerHTML = `
   <input type="hidden" name="password" value=""> 
   First name: <input type="text" name="name"><br>
   Username: <input type="text" name="username"><br>
-  Email: <input type="text" name="email"><br>
-  <input type="submit" value="Submit">`
-  newUserForm.addEventListener('submit', (event) => {
+  Email: <input type="email" name="email"><br>
+  <input type="submit" value="Submit" class="btn btn-primary"><br>
+  <input value="log in" class="btn btn-link">`
+  newUserFormDiv.addEventListener('submit', (event) => {
     event.preventDefault()
-    createUser({
+    console.log({
       name: event.target.name.value,
       username: event.target.username.value,
       email: event.target.email.value,
       password: event.target.password.value
     })
-    authenticate ()
+    authenticate()
   })
-  loginPanel.append(newUserForm)
+  // newUserFormDiv.addEventListener("click", (event) => {
+  //   if (event.target.innerText === "log in") {
+  //     console.log('blarg')
+  //     window.reload()
+  //   }
+
+  newUserForm.append(newUserFormDiv)
+  loginPanelForm.append(newUserForm)
 }

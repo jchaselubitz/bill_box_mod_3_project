@@ -10,8 +10,9 @@ function setNav (status) {
     main.append(sideNav)
     main.append(workspaceEl)
     navBar.append(logoutButton)
+    // navBar.append(newWorkspaceButton)
     setLogoutEvent ()
-    setLogoutEvent()
+
   } else {
     main.append(loginPanel)
     setNewUserFormEvent()

@@ -13,6 +13,15 @@ sideNav.id = 'sideNav'
 const loginPanel = document.createElement('div')
 loginPanel.className = 'loginPanel container bg-white border border-secondary'
 
+loginPanelForm = document.createElement('div')
+//loginPanelForm.className = "loginPanelForm"
+
+loginPanelButtonContainer = document.createElement('div')
+loginPanelButtonContainer.className = 'loginPanelButtonContainer'
+
+loginPanel.append(loginPanelForm)
+loginPanel.append(loginPanelButtonContainer)
+
 
 //workspace
 const workspaceEl = document.createElement('div')

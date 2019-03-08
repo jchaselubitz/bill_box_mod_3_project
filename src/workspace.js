@@ -1,5 +1,5 @@
 
-
+let currentWorkspace = window.localStorage.getItem('currentWorkspace') ? JSON.parse(window.localStorage.getItem('currentWorkspace')) : null
 let newWorkspaceButton = document.createElement('button')
 
 function chooseWorkspace (currentUser) {
@@ -24,7 +24,10 @@ function chooseWorkspace (currentUser) {
 }
 
 function setWorkspace (workspace) {
+  
   let currentWorkspace = workspace
+  window.localStorage.setItem('currentWorkspace', JSON.stringify(currentWorkspace))
+  console.log(currentWorkspace)
   showAllDocs(currentWorkspace)
 }
 
@@ -38,6 +41,7 @@ function setNewWorkspaceFormEvent () {
   newWorkspaceButton.id = 'newWorkspaceButton'
   newWorkspaceButton.addEventListener('click', () => {
     createNewWorkspaceForm()
+    findExistingWorkspace()
   })
 }
 
@@ -57,3 +61,23 @@ function createNewWorkspaceForm () {
     })
   })
 }
+
+// ===================== Create Workspace =======================
+
+
+// function findExistingWorkspace () {
+//   const existingWorkspaceForm = document.createElement('form')
+//   existingWorkspaceForm.className = 'form-group'
+//   existingWorkspaceForm.innerHTML = `
+//   Name your workspace: <input type="text" name="name"><br>
+//   <input type="hidden" name="user" value="${currentUser.id}"><br>
+//   <input type="submit" value="Submit">`
+//   workspaceEl.prepend(existingWorkspaceForm)
+//   existingWorkspaceForm.addEventListener('submit', (event, currentUser) => {
+//     event.preventDefault()
+//     createWorkspace({
+//       name: event.target.name.value,
+//       user: event.target.user.value
+//     })
+//   })
+// }

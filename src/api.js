@@ -64,8 +64,7 @@ function createFunc (url, object, key) {
     body: JSON.stringify({ [key]: object })
   }
   return fetch(url, options)
-    .then(resp => resp.json)
-    .then(resp => console.log(resp))
+    .then(resp => resp.json())
 }
 
 // =====++++============ PATCH FUNCTION ===============================

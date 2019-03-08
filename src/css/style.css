@@ -22,3 +22,24 @@
 .workspace {
   padding-top: 20px;
 }
+
+.loginPanelForm {
+  padding: 5px;
+}
+
+.logForm {
+  width: 100%;
+  margin-top: 30%;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.loginPanelButtonContainer {
+  padding: 5px;
+}
+
+.center {
+  width: 100%;
+  margin: auto;
+  text-align: center;
+}
