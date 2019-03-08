@@ -1,6 +1,8 @@
 
 
 let currentUser = window.localStorage.getItem('currentUser') ? JSON.parse(window.localStorage.getItem('currentUser')) : null
+let currentWorkspace = window.localStorage.getItem('currentWorkspace') && window.localStorage.getItem('currentWorkspace') !== 'undefined' ? JSON.parse(window.localStorage.getItem('currentWorkspace')) : null
+let newWorkspaceButton = document.createElement('button')
 
 // ===================== Login =======================
 function authenticate () {

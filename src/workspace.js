@@ -1,6 +1,5 @@
 
-let currentWorkspace = window.localStorage.getItem('currentWorkspace') ? JSON.parse(window.localStorage.getItem('currentWorkspace')) : null
-let newWorkspaceButton = document.createElement('button')
+
 
 function chooseWorkspace (currentUser) {
   let workspacesArray = currentUser.workspaces
@@ -41,16 +40,15 @@ function setNewWorkspaceFormEvent () {
   newWorkspaceButton.id = 'newWorkspaceButton'
   newWorkspaceButton.addEventListener('click', () => {
     createNewWorkspaceForm()
-    findExistingWorkspace()
+    listWorkspaces()
   })
 }
-
+const newWorkspaceForm = document.createElement('form')
 function createNewWorkspaceForm () {
-  const newWorkspaceForm = document.createElement('form')
   newWorkspaceForm.className = 'form-group'
   newWorkspaceForm.innerHTML = `
   Name your workspace: <input type="text" name="name"><br>
-  <input type="hidden" name="user" value="${currentUser.id}"><br>
+  <input type="hidden" name="name" value="${currentUser.id}"><br>
   <input type="submit" value="Submit">`
   workspaceEl.prepend(newWorkspaceForm)
   newWorkspaceForm.addEventListener('submit', (event) => {
@@ -62,7 +60,65 @@ function createNewWorkspaceForm () {
   })
 }
 
-// ===================== Create Workspace =======================
+// ===================== Add Workspace =======================
+
+let storedWorkspaces = []
+// ===== list workspaces ===
+function listWorkspaces () {
+  getWorkspaces()
+  .then(workspaces => {
+    (unDisplay(workspaces))
+   // storedWorkspaces.push(workspaces)
+  })
+}
+
+let workspaceList = document.createElement('ul')
+function unDisplay(workspaces) {
+  for (const workspace of workspaces) {
+    const workspaceListEl = document.createElement('li')
+    // console.log(workspace)
+    workspaceListEl.innerText = `${workspace.name}`
+    // console.log('reaching workspaceListEl')
+    workspaceListEl.id = `${workspace.id}`
+    workspaceListEl.style.display = ""
+    workspaceList.append(workspaceListEl)
+    clickToAddWorkspace (workspaceListEl, workspace) 
+  }
+  newWorkspaceForm.append(workspaceList)
+}
+
+function clickToAddWorkspace (workspaceListEl, workspace) {
+  workspaceListEl.addEventListener('click', () => {
+   console.log("workspace.users:", workspace.users)
+   // console.log("currentUser.id:", currentUser.id)
+    workspace.users.push(currentUser)
+    console.log("workspace.users after:", workspace.users, workspace.name)
+    updateWorkspace(workspace)
+  })
+}
+// //SEARCH
+// // get input element
+// const searchEl = document.querySelector('#filter-input')
+// // Add event Listener
+// searchEl.addEventListener('keyup', filterGifts)
+// //Get value of input
+// function filterGifts() {
+//   let filterValue = document.querySelector('#filter-input').value.toUpperCase()
+//   // get gifts ul
+//   let giftsUl = document.querySelector('.gift-list')
+//   // get each gift (Li)
+//   let giftLi = giftsUl.querySelectorAll('.gift')
+//   // loop through items
+//   for (let i = 0; i < giftLi.length; i++) {
+//   //if matched
+//       if (gifts[i].name.toUpperCase().indexOf(filterValue) > - 1) {
+//       giftLi[i].style.display = ''
+//     } else {
+//       giftLi[i].style.display = 'none'
+//     }
+//   }
+// }
+
 
 
 // function findExistingWorkspace () {
@@ -70,13 +126,13 @@ function createNewWorkspaceForm () {
 //   existingWorkspaceForm.className = 'form-group'
 //   existingWorkspaceForm.innerHTML = `
 //   Name your workspace: <input type="text" name="name"><br>
-//   <input type="hidden" name="user" value="${currentUser.id}"><br>
+//   <input type="hidden" name="workspace" value="${workspaceFromSelector.id}"><br>
 //   <input type="submit" value="Submit">`
 //   workspaceEl.prepend(existingWorkspaceForm)
 //   existingWorkspaceForm.addEventListener('submit', (event, currentUser) => {
 //     event.preventDefault()
-//     createWorkspace({
-//       name: event.target.name.value,
+//     updateWorkspace({
+//       workspace: event.target.name.value,
 //       user: event.target.user.value
 //     })
 //   })

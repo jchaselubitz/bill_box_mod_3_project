@@ -12,6 +12,7 @@ function getDocuments () {
 }
 
 function getWorkspaces () {
+  console.log('reaching getWorkspaces API')
   return getFunc(workspacesURL)
 }
 
@@ -101,7 +102,7 @@ function patchFunc (url, object, key) {
   }
   return fetch(url, options)
     .then(resp => resp.json)
-    .then(resp => console.log(resp))
+    .then(resp => console.log("responce from patch", resp))
 }
 
 // =====++++============ POST FUNCTION ===============================
