@@ -89,11 +89,7 @@ function unDisplay(workspaces) {
 
 function clickToAddWorkspace (workspaceListEl, workspace) {
   workspaceListEl.addEventListener('click', () => {
-   console.log("workspace.users:", workspace.users)
-   // console.log("currentUser.id:", currentUser.id)
-    workspace.users.push(currentUser)
-    console.log("workspace.users after:", workspace.users, workspace.name)
-    updateWorkspace(workspace)
+    createUserWorkspaces({user_id: currentUser.id, workspace_id: workspace.id})
   })
 }
 // //SEARCH

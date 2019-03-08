@@ -5,6 +5,7 @@ const usersURL = `${baseURL}/users`
 const workspacesURL = `${baseURL}/workspaces`
 const commentsURL = `${baseURL}/comments`
 const tagsURL = `${baseURL}/tags`
+const uwURL = `${baseURL}/user_workspaces`
 // =====++++============ GET FUNCTION =======================
 
 function getDocuments () {
@@ -104,6 +105,23 @@ function patchFunc (url, object, key) {
     .then(resp => resp.json)
     .then(resp => console.log("responce from patch", resp))
 }
+
+function createUserWorkspaces(userWorkspaceObject) {
+  //console.log(userWorkspaceObject)
+  console.log(uwURL)
+  const options = {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({user_workspace: userWorkspaceObject})
+  }
+  return fetch(uwURL, options)
+    .then(resp => resp.json())
+    .then(resp => console.log("responce from createUserWorkspaces", resp))
+}
+
 
 // =====++++============ POST FUNCTION ===============================
 
